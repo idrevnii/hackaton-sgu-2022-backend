@@ -1,5 +1,3 @@
-function hello() {
-  console.log('Hello world!')
-}
+import { startApp } from './app/app'
 
-hello()
+startApp()
