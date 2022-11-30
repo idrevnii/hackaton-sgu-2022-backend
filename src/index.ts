@@ -1,3 +1,7 @@
 import { startApp } from './app/app'
 
-startApp()
+async function main() {
+  startApp()
+}
+
+main()
