@@ -3,7 +3,7 @@
 # Запуск
 
 1. Установить зависимости `yarn` или `npm install`
-2. Запустить сервер `yarn develop` или `npm run start`
+2. Запустить сервер `yarn develop` или `npm run develop`
 
 Теперь веб-сервер доступен по адресу `http://localhost:3001`.
 Доступны такие пути:
