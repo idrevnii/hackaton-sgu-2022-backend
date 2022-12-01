@@ -1,4 +1,5 @@
 import Fastify from 'fastify'
+import cors from '@fastify/cors'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import { getNewsPage, getSchedule } from '../core'
@@ -39,12 +40,13 @@ fastify.get('/schedule', async (request, reply) => {
   )
 })
 
-export function startApp() {
-  fastify.listen({ port: 3000 }, function (err, address) {
+export async function startApp() {
+  await fastify.register(cors)
+
+  fastify.listen({ port: 3001 }, function (err) {
     if (err) {
       fastify.log.error(err)
       process.exit(1)
     }
-    fastify.log.info(`Server is now listening on ${address}`)
   })
 }
