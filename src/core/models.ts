@@ -24,7 +24,9 @@ export type RawLessons = {
 
 export type LessonWithVariants = {
   name?: string
-  variants: Omit<Lesson, 'name'>[]
+  variants: Lesson[]
+  start?: string
+  end?: string
 }
 
 export type Lesson = {
@@ -34,6 +36,8 @@ export type Lesson = {
   name?: string
   teacher?: string
   location?: string
+  start?: string
+  end?: string
 }
 
 export type LessonSpecials = {

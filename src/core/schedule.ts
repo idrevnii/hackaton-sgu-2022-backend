@@ -31,6 +31,10 @@ export async function getSchedule(url: string) {
         const root = parse(data)
         const raw = root.querySelectorAll('tr > td')
 
+        const rawDates = root.querySelectorAll('tr > th')
+
+        const dates = parseDates(rawDates)
+
         return O.some(
           raw
             .filter((node) => node.attributes.id)
@@ -38,17 +42,48 @@ export async function getSchedule(url: string) {
               id: node.attributes.id,
               lesson: parseLesson(node.childNodes)
             }))
-            .reduce<Schedule>((accum, { id, lesson }) => {
+            .reduce((accum, { id, lesson }) => {
               const [period, day] = id.split('_').map((num) => +num - 1)
               const arr = [...accum]
               arr[day] = [...(arr[day] ?? [])]
+              // @ts-ignore
               arr[day][period] = lesson
               return arr
-            }, [])
+            }, [] as Schedule)
+            .map((day) =>
+              day.map((lesson, index) => {
+                if (Object.keys(lesson).length > 0) {
+                  return {
+                    ...lesson,
+                    ...dates[index]
+                  }
+                }
+                return lesson
+              })
+            )
         )
       }
     )
   )
+}
+
+function parseDates(dates: Node[]) {
+  const matchNumber = (text: string) => {
+    for (const char of text) {
+      const number = Number(char)
+      if (!isNaN(number)) {
+        return true
+      }
+    }
+    return false
+  }
+  return dates
+    .map((date) => date.innerText)
+    .filter((text) => matchNumber(text))
+    .map((text) => ({
+      start: text.slice(0, 5),
+      end: text.slice(5)
+    }))
 }
 
 function parseLesson(rawLessons: Node[]) {
@@ -73,6 +108,7 @@ function parseLesson(rawLessons: Node[]) {
 
     // if lessons with subgroups and odd
     return parsedLesson.reduce<LessonWithVariants>(
+      // @ts-ignore
       (accum, { type, odd, subgroup, name, teacher, location: auditory }) => {
         return {
           ...accum,
