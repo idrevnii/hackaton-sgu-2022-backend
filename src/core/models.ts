@@ -33,7 +33,7 @@ export type Lesson = {
   subgroup?: string
   name?: string
   teacher?: string
-  auditory?: string
+  location?: string
 }
 
 export type LessonSpecials = {
@@ -50,8 +50,8 @@ export type LessonTeacher = {
   teacher?: string
 }
 
-export type LessonAuditory = {
-  auditory?: string
+export type LessonLocation = {
+  location?: string
 }
 
 type Id = `${number}_${number}`

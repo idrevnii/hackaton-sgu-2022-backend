@@ -11,7 +11,7 @@ import {
   LessonSpecials,
   LessonName,
   LessonTeacher,
-  LessonAuditory
+  LessonLocation
 } from './models'
 
 export async function getSchedule(url: string) {
@@ -73,7 +73,7 @@ function parseLesson(rawLessons: Node[]) {
 
     // if lessons with subgroups and odd
     return parsedLesson.reduce<LessonWithVariants>(
-      (accum, { type, odd, subgroup, name, teacher, auditory }) => {
+      (accum, { type, odd, subgroup, name, teacher, location: auditory }) => {
         return {
           ...accum,
           variants: [
@@ -84,7 +84,7 @@ function parseLesson(rawLessons: Node[]) {
               ...(odd ? { odd } : {}),
               ...(subgroup ? { subgroup } : {}),
               teacher,
-              auditory
+              location: auditory
             }
           ]
         }
@@ -121,9 +121,9 @@ function parseTeacher(teacherNode: Node[]): LessonTeacher {
   return {}
 }
 
-function parseAuditory(auditoryNode: Node[]): LessonAuditory {
+function parseAuditory(auditoryNode: Node[]): LessonLocation {
   if (auditoryNode.length === 1 && auditoryNode[0] instanceof TextNode) {
-    return { auditory: auditoryNode[0].text }
+    return { location: auditoryNode[0].text }
   }
   return {}
 }

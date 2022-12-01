@@ -56,7 +56,7 @@ export async function getNewsPage(page = 0) {
         logger.error(`Failed to get news, reason: \n${error}`)
         return O.none
       },
-      (data) => pipe(pickNewsContainer(data), parseNewsFromContainer, O.some)
+      (data) => pipe(data, pickNewsContainer, parseNewsFromContainer, O.some)
     )
   )
 }
