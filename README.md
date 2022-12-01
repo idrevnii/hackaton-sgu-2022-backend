@@ -1,19 +1,13 @@
-# About the project
+Бек-енд для сайта с экспортом расписания СГУ, также имеет АПИ для новостей
 
-This is typescript template for various NodeJS projects. Template contains ESLint, Prettier and Nodemon.
+# Запуск
 
-# Installation
+1. Установить зависимости `yarn` или `npm install`
+2. Запустить сервер `yarn develop` или `npm run start`
 
-1. Click the 'Use this template' button and follow instructions OR `git clone https://github.com/idrevnii/typescript-template`
+Теперь веб-сервер доступен по адресу `http://localhost:3001`.
+Доступны такие пути:
 
-2. Change the project name in `package.json' and you can start write your code :)
-
-# Commands
-
-All commands below are written with `yarn` but you can also use `npm run`.
-
-- `yarn develop` Will run nodemon, which will keep watch for changes in src and will restart your project
-- `yarn build` Builds your project to JS
-- `yarn start` Builds and start your project
-- `yarn lint` Launches ESLint for linting your code
-- `yarn format` Launches Prettier for format your code
+1. `/news` - отдает json с последними новостями
+2. `/schedule?url=` - отдает json с расписанием, необходимо после url= указать ссылку на расписание
+3. `/calendar?url=` - отдает ics с календарем, необходимо после url= указать ссылку на расписание
